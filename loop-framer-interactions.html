@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Loop — a premium brand and product case study for a private social platform." />
+  <meta name="theme-color" content="#11110f" />
+  <title>Loop — Brand & Product Case Study</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #11110f;
+      --ink-soft: #1b1b18;
+      --paper: #f3f1ea;
+      --paper-bright: #faf9f5;
+      --muted: #a9a79f;
+      --line: rgba(17, 17, 15, 0.16);
+      --violet: #7558d8;
+      --violet-soft: #ddd5ff;
+      --sage: #77806a;
+      --radius-sm: 12px;
+      --radius-md: 24px;
+      --radius-lg: 40px;
+      --page: min(92vw, 1440px);
+      --ease: cubic-bezier(.2,.7,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "DM Sans", system-ui, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.nav-open { overflow: hidden; }
+    img { width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .serif { font-family: "Instrument Serif", Georgia, serif; }
+    .container { width: var(--page); margin-inline: auto; }
+    .section { padding: clamp(5rem, 11vw, 10rem) 0; }
+    .eyebrow {
+      margin: 0 0 1rem;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .display {
+      margin: 0;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(3.6rem, 9vw, 9rem);
+      font-weight: 400;
+      line-height: .88;
+      letter-spacing: -.045em;
+    }
+    .display-md {
+      margin: 0;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(3rem, 7vw, 7rem);
+      font-weight: 400;
+      line-height: .92;
+      letter-spacing: -.04em;
+    }
+    .body-lg { font-size: clamp(1.1rem, 2vw, 1.4rem); line-height: 1.55; }
+    .muted { color: rgba(17,17,15,.62); }
+
+    .skip-link {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1000;
+      transform: translateY(-160%);
+      background: var(--paper-bright);
+      padding: .8rem 1rem;
+      border-radius: 999px;
+      transition: transform .2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      color: white;
+      mix-blend-mode: difference;
+    }
+    .nav {
+      width: var(--page);
+      margin-inline: auto;
+      padding: 1.35rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand { font-weight: 600; letter-spacing: -.02em; }
+    .nav-links { display: flex; gap: 1.6rem; font-size: .82rem; }
+    .nav-links a { position: relative; }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -.3rem;
+      height: 1px;
+      background: currentColor;
+      transition: right .35s var(--ease);
+    }
+    .nav-links a:hover::after, .nav-links a:focus-visible::after { right: 0; }
+    .menu-btn { display: none; border: 0; background: none; color: inherit; padding: .3rem; }
+
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      color: white;
+      background: #0f0f0d;
+    }
+    .hero-media, .hero-scrim { position: absolute; inset: 0; }
+    .hero-media img { height: 100%; object-fit: cover; filter: saturate(.75) contrast(1.03); transform: scale(1.03); }
+    .hero-scrim { background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.08) 35%, rgba(0,0,0,.75)); }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: var(--page);
+      margin-inline: auto;
+      padding: 9rem 0 4rem;
+      display: grid;
+      grid-template-columns: 1fr minmax(210px, .28fr);
+      gap: 3rem;
+      align-items: end;
+    }
+    .hero h1 { max-width: 10ch; }
+    .hero-meta { border-top: 1px solid rgba(255,255,255,.4); padding-top: 1rem; font-size: .78rem; line-height: 1.8; }
+    .hero-kicker { margin-bottom: 1.5rem; }
+
+    .manifesto {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+    }
+    .manifesto-inner { width: min(90vw, 1100px); }
+    .manifesto p { margin: 0; font-size: clamp(3.3rem, 8vw, 8rem); line-height: .95; letter-spacing: -.04em; }
+    .manifesto em { color: var(--violet-soft); font-weight: 400; }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: .72fr 1.28fr;
+      gap: clamp(3rem, 8vw, 9rem);
+      align-items: start;
+    }
+    .intro-copy { max-width: 720px; }
+    .intro-copy p:first-child { margin-top: 0; }
+    .project-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+    .project-meta dt { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .35rem; }
+    .project-meta dd { margin: 0; color: rgba(17,17,15,.62); }
+
+    .positioning { background: var(--paper-bright); }
+    .positioning-head { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; margin-bottom: 5rem; }
+    .positioning-head .body-lg { max-width: 34rem; margin: 0 0 .5rem auto; }
+    .platforms { border-top: 1px solid var(--line); }
+    .platform {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--line);
+      align-items: baseline;
+    }
+    .platform-name { font-size: clamp(1.5rem, 3vw, 2.8rem); }
+    .platform-role { font-family: "Instrument Serif", Georgia, serif; font-size: clamp(2.2rem, 5vw, 5rem); text-align: right; }
+    .platform.loop-row .platform-role { color: var(--violet); }
+
+    .image-break { position: relative; min-height: 85svh; overflow: hidden; background: #ddd; }
+    .image-break img { position: absolute; inset: 0; height: 100%; object-fit: cover; }
+    .image-break figcaption {
+      position: absolute;
+      left: 4vw;
+      bottom: 3vw;
+      max-width: 30ch;
+      color: white;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1;
+      text-shadow: 0 2px 30px rgba(0,0,0,.35);
+    }
+
+    .principles { background: var(--ink); color: var(--paper); }
+    .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,.14); margin-top: 5rem; }
+    .principle { min-height: 380px; background: var(--ink); padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .principle-number { color: var(--violet-soft); font-size: .76rem; letter-spacing: .16em; }
+    .principle h3 { margin: 0 0 .8rem; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(2rem, 4vw, 3.8rem); font-weight: 400; line-height: .95; }
+    .principle p { max-width: 28ch; color: rgba(243,241,234,.62); }
+
+    .direction-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.2rem; margin-top: 5rem; }
+    .tile { position: relative; overflow: hidden; border-radius: var(--radius-md); min-height: 340px; background: #ddd; }
+    .tile img { height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+    .tile:hover img { transform: scale(1.035); }
+    .tile-a { grid-column: span 7; min-height: 650px; }
+    .tile-b { grid-column: span 5; }
+    .tile-c { grid-column: span 5; }
+    .tile-d { grid-column: span 7; }
+    .tile-label { position: absolute; inset: auto 1rem 1rem; color: white; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+
+    .language { background: var(--violet); color: white; }
+    .language-list { margin-top: 4rem; }
+    .language-line {
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,.35);
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(3rem, 8vw, 8rem);
+      line-height: .92;
+      letter-spacing: -.04em;
+    }
+    .language-line:last-child { border-bottom: 1px solid rgba(255,255,255,.35); }
+
+    .product { background: #d8d0f9; overflow: hidden; }
+    .product-head { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; }
+    .product-stage { margin-top: 5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; align-items: center; }
+    .phone { padding: .7rem; border-radius: 2.4rem; background: #111; box-shadow: 0 35px 80px rgba(17,17,15,.22); }
+    .phone img { border-radius: 1.9rem; aspect-ratio: 9 / 19.5; object-fit: cover; }
+    .phone:nth-child(2) { transform: translateY(-4rem); }
+    .product-caption { max-width: 34rem; margin: 4rem auto 0; text-align: center; }
+
+    .applications-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 1.25rem; margin-top: 5rem; }
+    .application { border-radius: var(--radius-md); overflow: hidden; background: #ddd; }
+    .application img { height: 100%; object-fit: cover; }
+    .application.wide { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
+    .application.tall { aspect-ratio: 4 / 5; }
+
+    .closing {
+      min-height: 90svh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: var(--paper-bright);
+    }
+    .closing-inner { width: min(90vw, 1050px); }
+    .closing p { max-width: 38rem; margin: 2rem auto 0; }
+
+    .next-project { display: block; padding: 3rem 0; background: var(--ink); color: var(--paper); }
+    .next-inner { width: var(--page); margin-inline: auto; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+    .next-title { font-family: "Instrument Serif", Georgia, serif; font-size: clamp(2.4rem, 5vw, 5rem); }
+    .arrow { font-size: clamp(2rem, 4vw, 4rem); transition: transform .35s var(--ease); }
+    .next-project:hover .arrow { transform: translateX(.5rem); }
+
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+
+
+    /* Framer-inspired interaction layer */
+    .scroll-progress {
+      position: fixed; inset: 0 auto auto 0; z-index: 220;
+      width: 100%; height: 3px; background: transparent; pointer-events: none;
+    }
+    .scroll-progress span { display:block; width:100%; height:100%; background: var(--violet-soft); transform:scaleX(0); transform-origin:left center; }
+
+    .chapter-rail {
+      position: fixed; left: 1.1rem; top: 50%; transform: translateY(-50%); z-index: 90;
+      display: grid; gap: .65rem; mix-blend-mode: difference; color: white;
+    }
+    .chapter-dot { width: 7px; height: 7px; border:1px solid currentColor; border-radius:50%; opacity:.45; transition:.3s var(--ease); }
+    .chapter-dot.active { opacity:1; transform:scale(1.5); background: currentColor; }
+
+    .hero-wordmark {
+      position:absolute; right:4vw; top:50%; transform:translateY(-50%) rotate(90deg);
+      transform-origin:center; z-index:2; font-family:"Instrument Serif",serif;
+      font-size:clamp(4rem,10vw,10rem); line-height:1; opacity:.16; white-space:nowrap;
+    }
+    .hero-orbit { position:absolute; width:45vw; aspect-ratio:1; border:1px solid rgba(255,255,255,.24); border-radius:50%; right:-14vw; top:-8vw; z-index:1; }
+    .hero-orbit::after { content:""; position:absolute; inset:18%; border:1px solid rgba(255,255,255,.16); border-radius:50%; }
+
+    .sticky-story { background: var(--paper-bright); }
+    .sticky-shell { width:var(--page); margin-inline:auto; display:grid; grid-template-columns:.82fr 1.18fr; gap:clamp(3rem,7vw,8rem); }
+    .sticky-copy { position:sticky; top:16vh; height:max-content; padding-bottom:15vh; }
+    .sticky-copy .display-md { max-width:8ch; }
+    .story-steps { display:grid; gap:18vh; padding:10vh 0 20vh; }
+    .story-step { min-height:62vh; display:flex; flex-direction:column; justify-content:center; border-top:1px solid var(--line); }
+    .story-step:last-child { border-bottom:1px solid var(--line); }
+    .story-index { font-size:.72rem; text-transform:uppercase; letter-spacing:.16em; color:var(--violet); margin-bottom:1rem; }
+    .story-step h3 { font:400 clamp(2.5rem,5vw,5.3rem)/.95 "Instrument Serif",serif; margin:0 0 1.2rem; letter-spacing:-.035em; }
+    .story-step p { max-width:42rem; font-size:clamp(1.05rem,1.6vw,1.3rem); color:rgba(17,17,15,.62); }
+
+    .metric-strip { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .metric { padding:2rem 1.4rem; border-right:1px solid var(--line); min-height:160px; display:flex; flex-direction:column; justify-content:space-between; }
+    .metric:last-child { border-right:0; }
+    .metric strong { font:400 clamp(2.5rem,5vw,5rem)/.9 "Instrument Serif",serif; }
+    .metric span { font-size:.76rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(17,17,15,.58); }
+
+    .reveal-frame { position:relative; overflow:hidden; }
+    .reveal-frame::after { content:""; position:absolute; inset:0; background:var(--paper); transform:scaleY(1); transform-origin:bottom; transition:transform 1.15s var(--ease); z-index:2; }
+    .reveal-frame.is-visible::after { transform:scaleY(0); }
+    .reveal-frame img { transform:scale(1.08); transition:transform 1.4s var(--ease); }
+    .reveal-frame.is-visible img { transform:scale(1); }
+
+    .feature-story { background:#ece8df; }
+    .feature-shell { width:var(--page); margin-inline:auto; }
+    .feature-head { display:grid; grid-template-columns:1fr 1fr; align-items:end; gap:3rem; margin-bottom:5rem; }
+    .feature-stack { display:grid; gap:8rem; }
+    .feature-row { display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(2rem,6vw,7rem); align-items:center; }
+    .feature-row:nth-child(even) { grid-template-columns:.9fr 1.1fr; }
+    .feature-row:nth-child(even) .feature-media { order:2; }
+    .feature-media { min-height:620px; border-radius:var(--radius-lg); overflow:hidden; background:#ccc; position:relative; }
+    .feature-media img { height:100%; object-fit:cover; }
+    .feature-copy h3 { font:400 clamp(2.8rem,5vw,5rem)/.95 "Instrument Serif",serif; margin:0 0 1rem; }
+    .feature-copy p { max-width:34rem; font-size:clamp(1.05rem,1.5vw,1.25rem); color:rgba(17,17,15,.62); }
+    .feature-tag { display:inline-flex; padding:.55rem .8rem; border:1px solid var(--line); border-radius:999px; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:1.4rem; }
+
+    .marquee { overflow:hidden; background:var(--ink); color:var(--paper); padding:1.3rem 0; border-top:1px solid rgba(255,255,255,.15); border-bottom:1px solid rgba(255,255,255,.15); }
+    .marquee-track { width:max-content; display:flex; gap:2.4rem; animation:marquee 28s linear infinite; font:400 clamp(2rem,4vw,4rem)/1 "Instrument Serif",serif; }
+    .marquee-track span::after { content:"✦"; margin-left:2.4rem; color:var(--violet-soft); }
+    @keyframes marquee { to { transform:translateX(-50%); } }
+
+    .phone { position:relative; overflow:hidden; }
+    .phone::after { content:""; position:absolute; inset:0; border-radius:inherit; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18); pointer-events:none; }
+    .phone-label { position:absolute; left:1.2rem; bottom:1.2rem; z-index:2; color:white; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; background:rgba(17,17,15,.5); backdrop-filter:blur(12px); padding:.55rem .7rem; border-radius:999px; }
+
+    .floating-note { position:absolute; z-index:3; max-width:220px; padding:1rem 1.1rem; border-radius:18px; background:rgba(250,249,245,.88); backdrop-filter:blur(18px); box-shadow:0 20px 60px rgba(17,17,15,.18); font-size:.82rem; }
+    .note-a { top:8%; right:4%; }
+    .note-b { bottom:8%; left:4%; }
+
+    .application { position:relative; }
+    .application::after { content:attr(data-label); position:absolute; left:1rem; bottom:1rem; color:white; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; background:rgba(17,17,15,.42); backdrop-filter:blur(10px); padding:.55rem .7rem; border-radius:999px; }
+
+    @media (max-width: 980px) {
+      .chapter-rail { display:none; }
+      .sticky-shell, .feature-head, .feature-row, .feature-row:nth-child(even) { grid-template-columns:1fr; }
+      .sticky-copy { position:relative; top:auto; padding-bottom:0; }
+      .story-steps { gap:4rem; padding:4rem 0 0; }
+      .story-step { min-height:auto; padding:3rem 0; }
+      .feature-row:nth-child(even) .feature-media { order:0; }
+      .metric-strip { grid-template-columns:repeat(2,1fr); }
+      .metric:nth-child(2) { border-right:0; }
+      .metric:nth-child(-n+2) { border-bottom:1px solid var(--line); }
+    }
+
+    @media (max-width: 700px) {
+      .hero-wordmark, .hero-orbit { display:none; }
+      .metric-strip { grid-template-columns:1fr; }
+      .metric { border-right:0; border-bottom:1px solid var(--line); }
+      .metric:last-child { border-bottom:0; }
+      .feature-media { min-height:460px; border-radius:24px; }
+      .marquee-track { animation-duration:20s; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-content, .intro-grid, .positioning-head, .product-head { grid-template-columns: 1fr; }
+      .hero-meta { max-width: 340px; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .principle { min-height: 290px; }
+      .tile-a, .tile-b, .tile-c, .tile-d { grid-column: span 12; min-height: 440px; }
+      .product-stage { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+      .phone { padding: .35rem; border-radius: 1.5rem; }
+      .phone img { border-radius: 1.2rem; }
+      .phone:nth-child(2) { transform: translateY(-1.5rem); }
+    }
+
+    @media (max-width: 700px) {
+      :root { --page: min(90vw, 1440px); }
+      .nav-links {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        display: grid;
+        place-content: center;
+        gap: 1.2rem;
+        font-size: 2rem;
+        background: var(--ink);
+        color: var(--paper);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .3s ease, visibility .3s ease;
+      }
+      .nav-links.open { opacity: 1; visibility: visible; }
+      .menu-btn { display: block; z-index: 2; }
+      .hero-content { padding-bottom: 2rem; }
+      .project-meta { grid-template-columns: 1fr; }
+      .platform { grid-template-columns: 1fr; gap: .3rem; }
+      .platform-role { text-align: left; }
+      .image-break { min-height: 70svh; }
+      .product-stage { width: 150%; margin-left: -25%; }
+      .applications-grid { grid-template-columns: 1fr; }
+      .application.wide { grid-column: auto; aspect-ratio: 4 / 5; }
+      .next-inner { align-items: end; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+      .marquee-track { animation:none; }
+      .reveal-frame::after { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="chapter-rail" aria-hidden="true"><span class="chapter-dot active"></span><span class="chapter-dot"></span><span class="chapter-dot"></span><span class="chapter-dot"></span><span class="chapter-dot"></span><span class="chapter-dot"></span></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Loop case study home">LOOP®</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <div class="nav-links" id="nav-links">
+        <a href="#story">Story</a>
+        <a href="#system">System</a>
+        <a href="#product">Product</a>
+        <a href="#applications">Applications</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=2200&q=88" alt="" />
+      </div>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="hero-orbit" aria-hidden="true"></div>
+      <div class="hero-wordmark" aria-hidden="true">private by design</div>
+      <div class="hero-content">
+        <div>
+          <p class="eyebrow hero-kicker">Loop · Brand & Product Case Study</p>
+          <h1 class="display" id="hero-title">Designed for the people who matter most.</h1>
+        </div>
+        <div class="hero-meta">
+          <div>Brand strategy</div>
+          <div>Visual identity</div>
+          <div>Product marketing</div>
+          <div>Campaign system</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="manifesto" aria-label="Brand premise">
+      <div class="manifesto-inner reveal">
+        <p class="serif">Most social platforms reward <em>performance.</em><br />Loop rewards <em>presence.</em></p>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <div class="container intro-grid">
+        <div class="reveal">
+          <p class="eyebrow">01 · The premise</p>
+          <h2 class="display-md">A quieter layer of social life.</h2>
+        </div>
+        <div class="intro-copy reveal">
+          <p class="body-lg">Social media is built for audiences. Group chats are built for logistics. Loop was positioned between them: a private, visual-first space for the candid moments that rarely belong anywhere else.</p>
+          <p class="muted">Not the family announcement board. Not another public feed. A shared living room for siblings, cousins, close friends and the few people who already understand the context.</p>
+          <dl class="project-meta">
+            <div><dt>Client</dt><dd>Loop</dd></div>
+            <div><dt>Category</dt><dd>Private social platform</dd></div>
+            <div><dt>Role</dt><dd>Visual design & creative direction</dd></div>
+            <div><dt>Scope</dt><dd>Positioning, identity, campaign, product storytelling</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section positioning">
+      <div class="container">
+        <div class="positioning-head">
+          <div class="reveal">
+            <p class="eyebrow">02 · Positioning</p>
+            <h2 class="display-md">Loop does not replace the platforms you use.</h2>
+          </div>
+          <p class="body-lg muted reveal">It claims a distinct emotional territory: low-stakes presence with a small, trusted circle.</p>
+        </div>
+        <div class="platforms reveal" role="list" aria-label="Platform positioning comparison">
+          <div class="platform" role="listitem"><span class="platform-name">Instagram</span><span class="platform-role">Performance</span></div>
+          <div class="platform" role="listitem"><span class="platform-name">WhatsApp</span><span class="platform-role">Coordination</span></div>
+          <div class="platform loop-row" role="listitem"><span class="platform-name">Loop</span><span class="platform-role">Presence</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sticky-story section" data-chapter>
+      <div class="sticky-shell">
+        <div class="sticky-copy reveal">
+          <p class="eyebrow">03 · Strategic distinction</p>
+          <h2 class="display-md">A product defined by what it refuses to become.</h2>
+          <p class="body-lg muted">Loop does not ask people to build an audience, maintain a persona, or keep a conversation alive. It creates room for low-stakes presence.</p>
+        </div>
+        <div class="story-steps">
+          <article class="story-step reveal">
+            <span class="story-index">01 / No broadcast behaviour</span>
+            <h3>Private by default.</h3>
+            <p>Every interaction begins inside a trusted circle. There is no public profile to curate, no discoverability pressure and no invisible audience beyond the people invited.</p>
+          </article>
+          <article class="story-step reveal">
+            <span class="story-index">02 / No reply obligation</span>
+            <h3>Presence without performance.</h3>
+            <p>A photo can simply exist. Loop removes the expectation that every moment needs a caption, reaction or conversation thread to prove it mattered.</p>
+          </article>
+          <article class="story-step reveal">
+            <span class="story-index">03 / No feed clutter</span>
+            <h3>Visual-first, context-rich.</h3>
+            <p>Instead of links, logistics and long messages competing for attention, the experience centres candid photos, short clips and familiar context.</p>
+          </article>
+          <article class="story-step reveal">
+            <span class="story-index">04 / No scale theatre</span>
+            <h3>Smallness is the feature.</h3>
+            <p>Loop becomes more valuable when the circle stays meaningful. Five siblings, eight cousins, twelve friends: enough people to feel connected, never enough to feel watched.</p>
+          </article>
+        </div>
+      </div>
+      <div class="container metric-strip reveal">
+        <div class="metric"><strong>5–40</strong><span>People per circle</span></div>
+        <div class="metric"><strong>0</strong><span>Follower counts</span></div>
+        <div class="metric"><strong>0</strong><span>Reply pressure</span></div>
+        <div class="metric"><strong>1</strong><span>Shared context</span></div>
+      </div>
+    </section>
+
+    <figure class="image-break reveal-frame" data-chapter>
+      <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=2200&q=88" alt="Close friends laughing together in a relaxed home setting" loading="lazy" />
+      <figcaption>Not another audience.<br />Just your people.</figcaption>
+    </figure>
+
+    <section class="section principles" id="system" data-chapter>
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow">04 · Design principles</p>
+          <h2 class="display-md">Designed intimacy.</h2>
+        </div>
+        <div class="principles-grid">
+          <article class="principle reveal">
+            <span class="principle-number">01 / Familiar faces</span>
+            <div><h3>Real before polished.</h3><p>Photography feels lived-in, familiar and close enough to belong in a private camera roll.</p></div>
+          </article>
+          <article class="principle reveal">
+            <span class="principle-number">02 / Quiet confidence</span>
+            <div><h3>Editorial, never cute.</h3><p>A restrained serif and grounded sans-serif give the identity confidence without startup softness.</p></div>
+          </article>
+          <article class="principle reveal">
+            <span class="principle-number">03 / Less pressure</span>
+            <div><h3>The moment comes first.</h3><p>Copy and interface cues remove the demand to perform, explain or respond.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow">05 · Creative direction</p>
+          <h2 class="display-md">Warm, documentary and slightly imperfect.</h2>
+        </div>
+        <div class="direction-grid">
+          <figure class="tile tile-a reveal"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1500&q=85" alt="Friends sharing a candid moment outdoors" loading="lazy" /><figcaption class="tile-label">Unposed presence</figcaption></figure>
+          <figure class="tile tile-b reveal"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=80&sat=-35" alt="Close crop of friends together" loading="lazy" /><figcaption class="tile-label">Natural texture</figcaption></figure>
+          <figure class="tile tile-c reveal"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=82&sat=-20" alt="Friends enjoying a relaxed day together" loading="lazy" /><figcaption class="tile-label">Shared context</figcaption></figure>
+          <figure class="tile tile-d reveal"><img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1500&q=85" alt="Family laughing together at home" loading="lazy" /><figcaption class="tile-label">Everyday closeness</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Not for broadcast</span><span>Just your people</span><span>No reply pressure</span><span>Post the ugly photo</span><span>Not for broadcast</span><span>Just your people</span><span>No reply pressure</span><span>Post the ugly photo</span></div></div>
+
+    <section class="section language" aria-labelledby="language-title" data-chapter>
+      <div class="container">
+        <p class="eyebrow reveal">06 · Campaign language</p>
+        <h2 class="display-md reveal" id="language-title">The voice sounds like someone already inside the circle.</h2>
+        <div class="language-list">
+          <div class="language-line reveal">Not for broadcast.</div>
+          <div class="language-line reveal">Just your people.</div>
+          <div class="language-line reveal">Post the ugly photo.</div>
+          <div class="language-line reveal">No reply pressure.</div>
+          <div class="language-line reveal">Life happens here.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section product" id="product" data-chapter>
+      <div class="container">
+        <div class="product-head">
+          <div class="reveal"><p class="eyebrow">07 · Product experience</p><h2 class="display-md">The interface gets out of the way.</h2></div>
+          <p class="body-lg muted reveal">A visual-first stream, small circles and human copy create a product that feels closer to opening a family album than entering another social network.</p>
+        </div>
+        <div class="product-stage reveal" aria-label="Conceptual Loop mobile screens">
+          <div class="phone"><span class="phone-label">Home circle</span><img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=700&q=86" alt="Conceptual Loop feed showing a family moment" loading="lazy" /></div>
+          <div class="phone"><span class="phone-label">Shared album</span><img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=700&q=86" alt="Conceptual Loop group view showing close friends" loading="lazy" /></div>
+          <div class="phone"><span class="phone-label">Daily moment</span><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=86" alt="Conceptual Loop photo post showing friends together" loading="lazy" /></div>
+        </div>
+        <div class="product-caption reveal">
+          <p class="serif body-lg">“Maya shared a photo in The Fam — no text needed.”</p>
+          <p class="muted">Notifications feel like a familiar tap on the shoulder, not an alert demanding attention.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section feature-story" data-chapter>
+      <div class="feature-shell">
+        <div class="feature-head">
+          <div class="reveal"><p class="eyebrow">08 · Product storytelling</p><h2 class="display-md">Small interactions, carefully designed.</h2></div>
+          <p class="body-lg muted reveal">The product narrative focuses less on feature volume and more on emotional friction: what makes people hesitate to share, and how the interface quietly removes that hesitation.</p>
+        </div>
+        <div class="feature-stack">
+          <article class="feature-row">
+            <div class="feature-media reveal-frame reveal"><img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1500&q=88" alt="Friends gathered closely in a relaxed room" loading="lazy"><div class="floating-note note-a">Maya shared a photo in <strong>The Fam</strong> — no text needed.</div></div>
+            <div class="feature-copy reveal"><span class="feature-tag">Quiet notifications</span><h3>Sounds like a person, not a system.</h3><p>Notifications carry the warmth and specificity of the circle itself. No urgency language, no engagement bait and no generic “new activity” phrasing.</p></div>
+          </article>
+          <article class="feature-row">
+            <div class="feature-media reveal-frame reveal"><img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1500&q=88" alt="Family sharing an everyday moment at home" loading="lazy"><div class="floating-note note-b"><strong>Post the blurry one.</strong><br>It already feels like you.</div></div>
+            <div class="feature-copy reveal"><span class="feature-tag">Empty-state language</span><h3>The interface gives permission.</h3><p>Prompts are written to lower self-consciousness. They do not demand content; they make imperfect sharing feel natural, expected and safe.</p></div>
+          </article>
+          <article class="feature-row">
+            <div class="feature-media reveal-frame reveal"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1500&q=88" alt="Friends enjoying time together outdoors" loading="lazy"></div>
+            <div class="feature-copy reveal"><span class="feature-tag">Circle architecture</span><h3>Built around relationships, not reach.</h3><p>Groups are framed as rooms with shared context rather than channels to manage. Naming, invitations and updates all reinforce intimacy over scale.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="applications" data-chapter>
+      <div class="container">
+        <div class="reveal"><p class="eyebrow">09 · Brand in context</p><h2 class="display-md">One idea, carried from screen to street.</h2></div>
+        <div class="applications-grid">
+          <figure class="application wide reveal reveal-frame" data-label="Launch campaign"><img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=2000&q=86" alt="Editorial campaign image showing friends in a relaxed setting" loading="lazy" /></figure>
+          <figure class="application tall reveal reveal-frame" data-label="Editorial social"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=84" alt="Friends sharing a moment around a table" loading="lazy" /></figure>
+          <figure class="application tall reveal reveal-frame" data-label="Community story"><img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=84" alt="Group of close friends together" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing" data-chapter>
+      <div class="closing-inner reveal">
+        <p class="eyebrow">Closing thought</p>
+        <h2 class="display-md">In a world designed for audiences, Loop was designed for relationships.</h2>
+        <p class="body-lg muted">The identity gives private connection the same care, confidence and visual sophistication usually reserved for public platforms—without losing the warmth of real life.</p>
+      </div>
+    </section>
+  </main>
+
+  <a class="next-project" href="#top" aria-label="Return to the beginning of the Loop case study">
+    <div class="next-inner"><div><div class="eyebrow">Case study complete</div><div class="next-title">Back to the beginning</div></div><span class="arrow" aria-hidden="true">↑</span></div>
+  </a>
+
+  <script>
+    (() => {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const menuButton = document.querySelector('.menu-btn');
+      const navLinks = document.querySelector('.nav-links');
+
+      menuButton?.addEventListener('click', () => {
+        const open = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', String(!open));
+        menuButton.textContent = open ? 'Menu' : 'Close';
+        navLinks.classList.toggle('open', !open);
+        document.body.classList.toggle('nav-open', !open);
+      });
+
+      navLinks?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          menuButton?.setAttribute('aria-expanded', 'false');
+          if (menuButton) menuButton.textContent = 'Menu';
+          navLinks.classList.remove('open');
+          document.body.classList.remove('nav-open');
+        });
+      });
+
+      const revealItems = document.querySelectorAll('.reveal');
+      if (reducedMotion || !('IntersectionObserver' in window)) {
+        revealItems.forEach(item => item.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        revealItems.forEach(item => observer.observe(item));
+      }
+
+      if (!reducedMotion) {
+        const heroImage = document.querySelector('.hero-media img');
+        const heroTitle = document.querySelector('.hero h1');
+        const orbit = document.querySelector('.hero-orbit');
+        const progress = document.querySelector('.scroll-progress span');
+        const chapterDots = [...document.querySelectorAll('.chapter-dot')];
+        const chapters = [...document.querySelectorAll('[data-chapter]')];
+        let ticking = false;
+
+        const updateScroll = () => {
+          const y = window.scrollY;
+          const max = document.documentElement.scrollHeight - innerHeight;
+          if (heroImage) heroImage.style.transform = `scale(${1.03 + Math.min(y/18000,.05)}) translateY(${Math.min(y * .075, 58)}px)`;
+          if (heroTitle) heroTitle.style.transform = `translateY(${Math.min(y * -.035, -28)}px)`;
+          if (orbit) orbit.style.transform = `rotate(${y * .025}deg)`;
+          if (progress) progress.style.transform = `scaleX(${max > 0 ? y/max : 0})`;
+
+          let active = 0;
+          chapters.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= innerHeight * .55) active = index;
+          });
+          chapterDots.forEach((dot, index) => dot.classList.toggle('active', index === Math.min(active, chapterDots.length - 1)));
+          ticking = false;
+        };
+
+        window.addEventListener('scroll', () => {
+          if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
+        }, { passive: true });
+        updateScroll();
+
+        document.querySelectorAll('.language-line').forEach((line, i) => {
+          line.style.transformOrigin = 'left center';
+          const obs = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) line.animate([
+              { transform:'translateX(8vw)', opacity:.15 },
+              { transform:'translateX(0)', opacity:1 }
+            ], { duration:850 + i*80, easing:'cubic-bezier(.2,.7,.2,1)', fill:'both' });
+          }, { threshold:.35 });
+          obs.observe(line);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
