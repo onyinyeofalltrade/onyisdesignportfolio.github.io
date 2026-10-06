@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="LemonAid — healthy instant citrus energy for real life.">
+<title>LemonAid — Strength, Squeezed Fresh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+--lemon:#F4F20A;--orange:#FF7A00;--green:#2F803E;--cream:#FFF6D8;
+--blue:#2E83FF;--ink:#173429;--pink:#FF4E7D;--mint:#B4F4D1;
+--pad:clamp(22px,5vw,82px);--display:"Archivo Black",sans-serif;
+--accent:"Bricolage Grotesque",sans-serif;--body:"Inter",sans-serif;
+--mono:"DM Mono",monospace;--ease:cubic-bezier(.18,.78,.18,1)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);overflow-x:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}a{color:inherit;text-decoration:none}
+::selection{background:var(--blue);color:white}
+.progress{position:fixed;top:0;left:0;right:0;height:4px;z-index:300;background:rgba(0,0,0,.06)}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue),var(--orange))}
+.nav{position:fixed;z-index:280;top:0;left:0;right:0;padding:20px var(--pad);display:flex;justify-content:space-between;align-items:center;font:500 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;mix-blend-mode:difference;color:white}
+.brand{font:800 22px var(--accent);letter-spacing:-.04em;text-transform:none}.navlinks{display:flex;gap:26px}.navlinks a{opacity:.64}.navlinks a:hover{opacity:1}
+.eyebrow{font:500 10px var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.hero{min-height:100svh;position:relative;overflow:hidden;display:grid;grid-template-columns:1.03fr .97fr;align-items:center;gap:4vw;padding:calc(var(--pad) + 50px) var(--pad) var(--pad);background:radial-gradient(circle at 78% 15%,rgba(46,131,255,.28),transparent 22%),linear-gradient(125deg,var(--lemon) 0%,#FAED2A 42%,var(--orange) 100%)}
+.hero:before{content:"";position:absolute;width:58vw;height:58vw;border-radius:50%;right:-22vw;top:-25vw;border:7vw solid rgba(255,255,255,.24)}
+.hero:after{content:"";position:absolute;left:-9vw;bottom:-14vw;width:39vw;height:39vw;border-radius:50%;background:var(--green);border:3vw solid rgba(255,255,255,.3);box-shadow:inset 0 0 0 1.5vw rgba(244,242,10,.5)}
+.hero__copy{position:relative;z-index:6}.hero__chip{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid rgba(23,52,41,.4);border-radius:999px;margin-bottom:30px;font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.22);backdrop-filter:blur(12px)}
+.hero__chip:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.hero h1{margin:0;max-width:770px;font:400 clamp(5.3rem,11.2vw,12.8rem)/.76 var(--display);letter-spacing:-.06em;text-transform:uppercase}
+.hero h1 span{display:block}.hero h1 .line2{color:white;margin-left:4vw}.hero h1 .line3{font-family:var(--accent);font-style:italic;color:var(--green);text-transform:none;margin-top:.05em}
+.hero__sub{max-width:560px;margin:32px 0 0;font-size:clamp(1rem,1.35vw,1.23rem);line-height:1.65}
+.hero__visual{position:relative;z-index:6;height:min(79vh,830px)}
+.hero__photo{position:absolute;right:0;top:2%;width:82%;height:94%;border-radius:38px;overflow:hidden;clip-path:polygon(10% 0,100% 0,100% 88%,86% 100%,0 100%,0 12%);box-shadow:0 45px 100px rgba(70,58,0,.22)}
+.hero__product{position:absolute;left:-2%;bottom:0;width:48%;aspect-ratio:4/5;border:8px solid var(--cream);border-radius:28px;overflow:hidden;transform:rotate(-5deg);box-shadow:0 35px 75px rgba(60,40,0,.24)}
+.hero__badge{position:absolute;right:-2%;top:13%;width:145px;height:145px;border-radius:50%;background:var(--blue);color:white;display:grid;place-items:center;text-align:center;padding:20px;font:800 23px/1 var(--accent);text-transform:uppercase;transform:rotate(9deg);box-shadow:0 25px 55px rgba(0,0,0,.16)}
+.hero__badge small{display:block;font:500 9px var(--mono);letter-spacing:.13em;margin-top:8px}
+.ticker{overflow:hidden;background:var(--ink);color:var(--lemon);padding:18px 0}.ticker__line{white-space:nowrap;font:400 clamp(3rem,7vw,7rem)/.76 var(--display);text-transform:uppercase;letter-spacing:-.04em}
+.intro{padding:14vh var(--pad);display:grid;grid-template-columns:.9fr 1.1fr;gap:9vw;background:var(--cream)}
+.intro h2{margin:0;font:400 clamp(4.4rem,8.5vw,9rem)/.83 var(--display);letter-spacing:-.045em;text-transform:uppercase}
+.intro h2 span{display:block;color:var(--orange);font-family:var(--accent);font-style:italic;text-transform:none}
+.intro__copy{align-self:end;font-size:clamp(1.05rem,1.45vw,1.3rem)}.intro__copy p:first-child{font-size:1.45em;line-height:1.3;margin-top:0}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:42px;padding-top:28px;border-top:1px solid rgba(23,52,41,.15)}
+.facts span{display:block;font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.5;margin-bottom:6px}
+.sticky{display:grid;grid-template-columns:42% 58%;background:var(--green);color:white}
+.sticky__left{position:sticky;top:0;height:100svh;padding:12vh var(--pad);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;border-right:1px solid rgba(255,255,255,.15)}
+.sticky__left:before{content:"";position:absolute;width:46vw;height:46vw;border-radius:50%;border:6vw solid rgba(244,242,10,.16);right:-31vw;bottom:-22vw}
+.sticky__left h2{margin:0;font:400 clamp(4.5rem,8vw,8rem)/.8 var(--display);text-transform:uppercase}
+.sticky__left h2 span{display:block;color:var(--lemon);font-family:var(--accent);font-style:italic;text-transform:none}
+.step{min-height:100svh;padding:0 var(--pad);display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.15)}
+.step h3{margin:18px 0;font:400 clamp(4rem,7vw,8rem)/.8 var(--display);text-transform:uppercase}
+.step p{max-width:560px;color:rgba(255,255,255,.74);font-size:18px}.step .metric{margin-top:28px;font:400 clamp(4rem,8vw,8rem)/1 var(--display);color:var(--lemon)}
+.products{padding:13vh var(--pad);background:linear-gradient(135deg,var(--cream),#FFF0B1)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:8vh}
+.section-head h2{margin:0;font:400 clamp(4.5rem,9vw,10rem)/.78 var(--display);text-transform:uppercase}
+.section-head p{max-width:470px;font-size:17px;line-height:1.65}
+.product-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.card{position:relative;overflow:hidden;border-radius:30px;min-height:660px;background:var(--lemon)}
+.card:nth-child(1){grid-column:span 7}.card:nth-child(2){grid-column:span 5}.card:nth-child(3){grid-column:span 12;min-height:760px}
+.card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(23,52,41,.68))}
+.chip{position:absolute;z-index:3;left:22px;top:22px;padding:10px 14px;border-radius:999px;background:var(--blue);color:white;font:500 9px var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.copy{position:absolute;z-index:3;left:26px;right:26px;bottom:26px;color:white}.copy h3{margin:0;font:400 clamp(3rem,5vw,5.8rem)/.8 var(--display);text-transform:uppercase}.copy p{max-width:460px;color:rgba(255,255,255,.78)}
+.card img{transition:transform 1.1s var(--ease)}.card:hover img{transform:scale(1.035)}
+.world{padding:13vh var(--pad);background:var(--orange);color:var(--ink)}
+.world h2{margin:0 0 8vh;font:400 clamp(4.6rem,9.5vw,10.5rem)/.77 var(--display);text-transform:uppercase}
+.world-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.world-card{position:relative;overflow:hidden;border-radius:25px;min-height:520px;background:var(--green)}
+.world-card:nth-child(1){grid-column:span 7}.world-card:nth-child(2){grid-column:span 5}.world-card:nth-child(3){grid-column:span 4}.world-card:nth-child(4){grid-column:span 8}.world-card:nth-child(5){grid-column:span 6}.world-card:nth-child(6){grid-column:span 6}
+.world-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(23,52,41,.75))}
+.world-card .copy h3{font-size:clamp(2.8rem,4.8vw,5.1rem)}
+.flavours{padding:13vh 0;background:var(--ink);color:white;overflow:hidden}.flavours .section-head{padding:0 var(--pad)}.flavours .section-head p{color:rgba(255,255,255,.7)}
+.flavour-run{white-space:nowrap;margin-top:10vh;font:400 clamp(8rem,22vw,24rem)/.68 var(--display);text-transform:uppercase;letter-spacing:-.07em;color:var(--lemon);transform:translateX(-6vw)}
+.flavour-cards{padding:8vh var(--pad) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.flavour-card{position:relative;overflow:hidden;border-radius:24px;min-height:560px;background:white}
+.flavour-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.65))}
+.campaign{padding:13vh var(--pad);background:var(--blue);color:white}.campaign .section-head p{color:rgba(255,255,255,.74)}
+.poster-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.poster{position:relative;overflow:hidden;border-radius:24px;aspect-ratio:4/5;background:var(--green)}
+.poster:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(23,52,41,.8))}
+.poster .chip{background:var(--lemon);color:var(--ink)}.poster .copy h3{font-size:clamp(2.7rem,4.2vw,4.7rem)}
+.campaign-type{overflow:hidden;background:var(--lemon);padding:9vh 0}
+.campaign-line{white-space:nowrap;margin:4vh 0;font:400 clamp(5rem,15vw,16rem)/.68 var(--display);letter-spacing:-.055em;text-transform:uppercase;color:var(--ink)}
+.campaign-line:nth-child(even){color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.retail{padding:13vh var(--pad);background:var(--cream)}
+.retail-stage{position:relative;overflow:hidden;min-height:92svh;border-radius:32px;background:linear-gradient(135deg,var(--lemon),var(--orange))}
+.retail-stage:before,.retail-stage:after{content:"";position:absolute;top:0;bottom:0;width:7px;background:var(--blue);box-shadow:0 0 35px rgba(46,131,255,.45)}
+.retail-stage:before{left:18%}.retail-stage:after{right:18%}
+.retail-stage__copy{position:absolute;z-index:3;left:var(--pad);top:var(--pad);max-width:720px}.retail-stage__copy h3{margin:0;font:400 clamp(4rem,8vw,8.5rem)/.78 var(--display);text-transform:uppercase}
+.retail-stage__product{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);width:min(320px,30vw);border-radius:22px;box-shadow:0 40px 80px rgba(80,48,0,.32)}
+.final{min-height:100svh;display:grid;place-items:center;text-align:center;padding:var(--pad);position:relative;overflow:hidden;background:radial-gradient(circle at 30% 30%,rgba(46,131,255,.3),transparent 22%),linear-gradient(135deg,var(--lemon),#FFEB36);color:var(--ink)}
+.final h2{position:relative;margin:0;font:400 clamp(5rem,13vw,14rem)/.68 var(--display);text-transform:uppercase}.final h2 span{display:block;color:var(--orange)}.final p{position:relative;max-width:580px;margin:34px auto 0;font-size:18px}
+footer{background:var(--ink);color:white;padding:68px var(--pad);display:flex;justify-content:space-between;align-items:flex-end;gap:30px}footer .mark{font:800 clamp(3rem,7vw,7rem)/.8 var(--accent)}footer p{margin:0;color:rgba(255,255,255,.58)}
+.reveal{opacity:0;transform:translateY(72px);transition:opacity 1s var(--ease),transform 1s var(--ease)}.reveal.on{opacity:1;transform:none}
+.mask{clip-path:inset(0 0 100% 0);transition:clip-path 1.2s var(--ease)}.mask.on{clip-path:inset(0)}
+@media(max-width:980px){.navlinks{display:none}.hero{grid-template-columns:1fr;align-items:end;padding-top:16vh}.hero__visual{height:62vh;margin-top:5vh}.intro,.sticky{grid-template-columns:1fr}.sticky__left{position:relative;height:auto;min-height:70svh;border-right:0}.card:nth-child(n),.world-card:nth-child(n){grid-column:span 12}.flavour-cards,.poster-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.hero h1{font-size:clamp(4.8rem,23vw,8rem)}.hero h1 .line2{margin-left:0}.hero__visual{height:54vh}.hero__photo{width:90%}.hero__product{width:44%;left:0}.hero__badge{width:110px;height:110px;font-size:17px}.facts,.flavour-cards,.poster-grid{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:24px}.product-grid,.world-grid{display:block}.card,.world-card{margin-bottom:16px;min-height:500px}.card:nth-child(3){min-height:620px}.retail-stage__product{width:48vw}footer{flex-direction:column;align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}.reveal,.mask{opacity:1;transform:none;clip-path:none}}
+</style>
+</head>
+<body>
+<div class="progress"><span></span></div>
+<header class="nav"><a class="brand" href="#top">LemonAid</a><nav class="navlinks"><a href="#strategy">Strategy</a><a href="#products">Products</a><a href="#flavours">Flavours</a><a href="#campaign">Campaign</a></nav><span>Instant strength, naturally</span></header>
+<main>
+<section class="hero" id="top">
+<div class="hero__copy"><div class="hero__chip">Healthy instant citrus energy</div><h1><span>Strength,</span><span class="line2">squeezed</span><span class="line3">fresh.</span></h1><p class="hero__sub">A citrus drink brand for the moments when energy drops but the day is not finished—fast, refreshing and made to feel cleaner than traditional energy drinks.</p></div>
+<div class="hero__visual"><div class="hero__photo"><img src="assets/people_bottles.jpg" alt="People holding colourful bottled drinks"></div><div class="hero__product"><img src="assets/lemonaid_classic.jpg" alt="LemonAid Classic Lemon bottle"></div><div class="hero__badge">Instant lift<small>Citrus clean</small></div></div>
+</section>
+<section class="ticker"><div class="ticker__line">The day is not done · squeeze back · fast energy · fresh feeling ·</div></section>
+<section class="intro" id="strategy"><div><div class="eyebrow">01 — Brand positioning</div><h2 class="reveal">Fast energy <span>from real citrus.</span></h2></div><div class="intro__copy reveal"><p>LemonAid is designed for everyday energy emergencies.</p><p>It sits between glucose drinks, natural hydration and modern functional wellness—delivering an immediate citrus-led lift without the aggressive personality of traditional energy drinks.</p><div class="facts"><div><span>Category</span>Healthy instant citrus energy</div><div><span>Core promise</span>Instant strength, naturally</div><div><span>Occasions</span>Study, work, travel, exercise and heat</div><div><span>Personality</span>Bright, optimistic, useful and refreshing</div></div></div></section>
+<section class="sticky"><div class="sticky__left"><div class="eyebrow">02 — The energy drop</div><h2>The day keeps <span>moving.</span></h2><p>Your energy does not always get the memo.</p></div><div><article class="step"><div class="reveal"><div class="eyebrow">01 / Afternoon</div><h3>2:47 PM.</h3><p>The work is still open, the commute is ahead and your attention is already fading.</p><div class="metric">LOW</div></div></article><article class="step"><div class="reveal"><div class="eyebrow">02 / Movement</div><h3>Halfway through.</h3><p>The shift, lecture, workout or journey is not finished just because your energy dipped.</p><div class="metric">50%</div></div></article><article class="step"><div class="reveal"><div class="eyebrow">03 / Return</div><h3>Squeeze back.</h3><p>LemonAid turns water and citrus into a quick, refreshing reset designed for real life.</p><div class="metric">GO</div></div></article></div></section>
+<section class="products" id="products"><div class="section-head"><div><div class="eyebrow">03 — Product architecture</div><h2 class="reveal">Energy, three ways.</h2></div><p>Portable sachets, ready-to-drink bottles and effervescent formats let LemonAid meet people wherever the energy drop happens.</p></div><div class="product-grid"><article class="card mask"><img src="assets/lemonaid_classic.jpg" alt="Classic Lemon ready-to-drink bottle"><div class="chip">Ready to drink</div><div class="copy"><h3>Cold. Bright. Immediate.</h3><p>A chilled bottle for supermarkets, gyms, offices, campuses and commuting.</p></div></article><article class="card mask"><img src="assets/lemonaid_sachets.jpg" alt="Colourful LemonAid sachets"><div class="chip">Instant sachet</div><div class="copy"><h3>Pocket-sized energy.</h3><p>Mixed with cold water whenever a quick citrus lift is needed.</p></div></article><article class="card mask"><img src="assets/juice_lineup.jpg" alt="Colourful bottled juice lineup"><div class="chip">Complete range</div><div class="copy"><h3>Built to look collectible.</h3><p>Every flavour keeps the same clear architecture while owning a distinct colour world.</p></div></article></div></section>
+<section class="world"><div class="eyebrow">04 — Ingredient and image world</div><h2 class="reveal">Energy you can recognise.</h2><div class="world-grid"><article class="world-card mask"><img src="assets/lime_can.jpg" alt="Lime beverage can surrounded by limes"><div class="copy"><h3>Citrus first</h3><p>Fresh fruit, condensation and sharp colour make the energy feel tangible.</p></div></article><article class="world-card mask"><img src="assets/watermelon.jpg" alt="Watermelon drink with watermelon slices"><div class="copy"><h3>Fruit becomes the set</h3><p>Ingredients build the whole visual environment.</p></div></article><article class="world-card mask"><img src="assets/strawberry_can.jpg" alt="Strawberry beverage can composition"><div class="copy"><h3>Unexpected compositions</h3></div></article><article class="world-card mask"><img src="assets/coldpressed_hands.jpg" alt="Hands holding bright cold-pressed drinks"><div class="copy"><h3>Made for real hands</h3><p>Photography stays social, sunny and immediate.</p></div></article><article class="world-card mask"><img src="assets/cucumber_lime.jpg" alt="Cucumber lime drinks"><div class="copy"><h3>Hydration cues</h3></div></article><article class="world-card mask"><img src="assets/lif_bottle.jpg" alt="Juice bottle surrounded by mangoes"><div class="copy"><h3>Ingredient-led colour</h3><p>Every flavour earns its own atmosphere.</p></div></article></div></section>
+<section class="flavours" id="flavours"><div class="section-head"><div><div class="eyebrow">05 — Flavour system</div><h2>Five moods. One boost.</h2></div><p>Each blend has its own colour temperature, energy occasion and personality.</p></div><div class="flavour-run">Lemon Ginger Mint Orange Berry</div><div class="flavour-cards"><article class="flavour-card mask"><img src="assets/lemonaid_classic.jpg" alt="Classic Lemon bottle"><div class="copy"><h3>Classic Lemon</h3><p>Sharp, clean and immediate.</p></div></article><article class="flavour-card mask"><img src="assets/lemonaid_ginger.jpg" alt="Lemon Ginger bottle"><div class="copy"><h3>Lemon + Ginger</h3><p>Warm strength and recovery.</p></div></article><article class="flavour-card mask"><img src="assets/lemonaid_mint.jpg" alt="Lemon Mint bottle"><div class="copy"><h3>Lemon + Mint</h3><p>Cooling, bright and refreshing.</p></div></article></div></section>
+<section class="campaign" id="campaign"><div class="section-head"><div><div class="eyebrow">06 — Campaign system</div><h2 class="reveal">Energy for everything still ahead.</h2></div><p>The campaign speaks to students, workers, travellers and athletes without turning every energy moment into extreme sport.</p></div><div class="poster-grid"><article class="poster mask"><img src="assets/people_bottles.jpg" alt="People holding bottled drinks"><div class="chip">Campaign 01</div><div class="copy"><h3>The day is not done.</h3></div></article><article class="poster mask"><img src="assets/lif_pair.jpg" alt="Two functional juice bottles"><div class="chip">Campaign 02</div><div class="copy"><h3>Drink your charger.</h3></div></article><article class="poster mask"><img src="assets/coldpressed_hands.jpg" alt="Hands holding lemon and orange drinks"><div class="chip">Campaign 03</div><div class="copy"><h3>Back in the game.</h3></div></article></div></section>
+<section class="campaign-type"><div class="campaign-line">Squeeze back.</div><div class="campaign-line">Instant lift.</div><div class="campaign-line">Citrus clean.</div><div class="campaign-line">Keep going.</div></section>
+<section class="retail"><div class="section-head"><div><div class="eyebrow">07 — Retail experience</div><h2 class="reveal">A burst of sunlight.</h2></div><p>Sampling stations, translucent yellow shelving and oversized citrus forms turn retail into an energising brand moment.</p></div><div class="retail-stage mask"><div class="retail-stage__copy"><h3>Squeeze Back Station.</h3><p>Cold samples, flavour discovery and instant-energy education in one high-impact environment.</p></div><img class="retail-stage__product" src="assets/lemonaid_classic.jpg" alt="LemonAid bottle in a retail installation"></div></section>
+<section class="final"><div><h2 class="reveal">The day is not done. <span>Neither are you.</span></h2><p>LemonAid delivers a brighter kind of energy—fast, refreshing and naturally citrus-led.</p></div></section>
+</main>
+<footer><div class="mark">LemonAid</div><p>Healthy instant citrus energy.<br>Strength, squeezed fresh.</p></footer>
+<script>
+const progress=document.querySelector(".progress span"),ticker=document.querySelector(".ticker__line"),run=document.querySelector(".flavour-run"),lines=document.querySelectorAll(".campaign-line");
+function fx(){const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`;if(ticker){const r=ticker.parentElement.getBoundingClientRect();ticker.style.transform=`translateX(${r.top*-.17}px)`}if(run){const r=run.getBoundingClientRect();run.style.transform=`translateX(${(r.top-innerHeight/2)*-.05}px)`}lines.forEach((line,i)=>{const r=line.getBoundingClientRect();line.style.transform=`translateX(${(r.top-innerHeight/2)*(i%2?.05:-.05)}px)`})}
+const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("on");io.unobserve(entry.target)}}),{threshold:.14,rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll(".reveal,.mask").forEach(el=>io.observe(el));addEventListener("scroll",fx,{passive:true});fx();
+</script>
+</body>
+</html>
