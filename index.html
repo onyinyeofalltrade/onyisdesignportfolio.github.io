@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="LemonAid — healthy instant citrus energy for real life.">
+<title>LemonAid — Squeeze Back</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --lemon:#F4F20A;
+  --orange:#FF7A00;
+  --green:#2F803E;
+  --cream:#FFF6D8;
+  --blue:#2E83FF;
+  --ink:#173429;
+  --pink:#FF4E7D;
+  --mint:#B4F4D1;
+  --white:#FFFFFF;
+  --pad:clamp(22px,5vw,82px);
+  --display:"Archivo Black",sans-serif;
+  --accent:"Bricolage Grotesque",sans-serif;
+  --body:"Inter",sans-serif;
+  --mono:"DM Mono",monospace;
+  --ease:cubic-bezier(.18,.78,.18,1);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);overflow-x:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:var(--blue);color:white}
+
+.progress{
+  position:fixed;top:0;left:0;right:0;height:4px;z-index:500;background:rgba(0,0,0,.05)
+}
+.progress span{
+  display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue),var(--orange))
+}
+
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:450;
+  padding:20px var(--pad);
+  display:flex;justify-content:space-between;align-items:center;
+  font:500 11px var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  mix-blend-mode:difference;color:white;
+}
+.brand{font:800 23px var(--accent);text-transform:none;letter-spacing:-.04em}
+.navlinks{display:flex;gap:26px}
+.navlinks a{opacity:.62}.navlinks a:hover{opacity:1}
+
+.eyebrow{font:500 10px var(--mono);letter-spacing:.18em;text-transform:uppercase}
+
+.energy-open{
+  min-height:120svh;
+  position:relative;
+  overflow:hidden;
+  background:var(--cream);
+}
+
+.energy-stage{
+  position:sticky;
+  top:0;
+  height:100svh;
+  display:grid;
+  place-items:center;
+  padding:var(--pad);
+  text-align:center;
+}
+
+.energy-meter{
+  position:absolute;
+  top:11vh;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(680px,80vw);
+}
+
+.energy-meter__top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;
+  font:500 11px var(--mono);
+  letter-spacing:.14em;text-transform:uppercase;
+}
+
+.energy-meter__track{
+  height:18px;
+  border:2px solid var(--ink);
+  border-radius:999px;
+  padding:3px;
+  background:rgba(255,255,255,.5);
+}
+
+.energy-meter__fill{
+  height:100%;
+  width:8%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--orange),var(--lemon),var(--green));
+  transition:width .3s linear;
+}
+
+.energy-time{
+  margin:0;
+  font:400 clamp(7rem,20vw,21rem)/.7 var(--display);
+  letter-spacing:-.07em;
+  color:var(--ink);
+}
+
+.energy-status{
+  margin:22px 0 0;
+  font:700 clamp(1.8rem,3vw,3rem)/1 var(--accent);
+}
+
+.energy-lemon{
+  position:absolute;
+  width:min(310px,34vw);
+  aspect-ratio:1;
+  border-radius:50%;
+  bottom:-8%;
+  left:50%;
+  transform:translateX(-50%) scale(.75);
+  background:
+    radial-gradient(circle at 36% 30%,rgba(255,255,255,.85),transparent 9%),
+    radial-gradient(circle at 50% 50%,#FFF45C 0 58%,#DBD600 59% 72%,#FFFDE0 73% 76%,#F4F20A 77%);
+  border:10px solid rgba(255,255,255,.55);
+  box-shadow:0 35px 80px rgba(77,68,0,.23);
+  transition:transform .2s linear,bottom .2s linear;
+}
+
+.energy-burst{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 50% 55%,rgba(46,131,255,.2),transparent 18%),
+    conic-gradient(from 0deg at 50% 56%,transparent 0 10deg,rgba(255,122,0,.24) 10deg 14deg,transparent 14deg 32deg,rgba(47,128,62,.2) 32deg 38deg,transparent 38deg 56deg);
+  opacity:0;
+  transition:opacity .2s linear;
+}
+
+.reveal-word{
+  position:absolute;
+  left:var(--pad);right:var(--pad);bottom:8vh;
+  opacity:0;
+  transform:translateY(50px);
+  text-align:center;
+  font:400 clamp(5rem,13vw,14rem)/.7 var(--display);
+  text-transform:uppercase;
+  color:var(--blue);
+}
+
+.journey{
+  background:var(--ink);
+  color:white;
+  padding:0;
+}
+
+.journey__intro{
+  min-height:80svh;
+  padding:14vh var(--pad);
+  display:grid;
+  align-items:center;
+}
+
+.journey__intro h2{
+  margin:0;
+  max-width:1100px;
+  font:400 clamp(4.8rem,10vw,11rem)/.76 var(--display);
+  text-transform:uppercase;
+}
+.journey__intro h2 span{color:var(--lemon)}
+
+.bottle-journey{
+  position:relative;
+  min-height:420svh;
+}
+
+.bottle-pin{
+  position:sticky;
+  top:0;
+  height:100svh;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+
+.bottle-pin__background{
+  position:absolute;inset:0;
+  transition:background .5s var(--ease);
+  background:linear-gradient(135deg,#F4F20A,#FF7A00);
+}
+
+.bottle-pin__scene{
+  position:absolute;inset:0;
+  opacity:0;
+  transition:opacity .5s var(--ease);
+}
+.bottle-pin__scene.active{opacity:1}
+.bottle-pin__scene img{filter:saturate(1.08) contrast(1.02)}
+.bottle-pin__scene:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(23,52,41,.08),rgba(23,52,41,.58));
+}
+
+.bottle-pin__product{
+  position:relative;
+  z-index:5;
+  width:min(300px,28vw);
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 50px 100px rgba(0,0,0,.35);
+  transform:rotate(-2deg);
+}
+
+.bottle-pin__label{
+  position:absolute;
+  z-index:6;
+  left:var(--pad);bottom:var(--pad);
+  max-width:560px;
+}
+
+.bottle-pin__label .time{
+  font:500 11px var(--mono);letter-spacing:.17em;text-transform:uppercase;color:var(--lemon)
+}
+
+.bottle-pin__label h3{
+  margin:14px 0 0;
+  font:400 clamp(3.8rem,7vw,7.4rem)/.78 var(--display);
+  text-transform:uppercase;
+}
+
+.bottle-pin__label p{
+  max-width:500px;
+  color:rgba(255,255,255,.78);
+  font-size:18px;
+}
+
+.energy-moments{
+  background:var(--blue);
+  color:white;
+  padding:13vh 0;
+  overflow:hidden;
+}
+
+.section-head{
+  padding:0 var(--pad);
+  display:flex;justify-content:space-between;align-items:end;gap:40px;
+  margin-bottom:8vh;
+}
+
+.section-head h2{
+  margin:0;
+  font:400 clamp(4.6rem,9vw,10rem)/.78 var(--display);
+  text-transform:uppercase;
+}
+
+.section-head p{
+  max-width:470px;
+  font-size:17px;
+  line-height:1.65;
+}
+
+.moments-track{
+  display:flex;
+  gap:18px;
+  padding:0 var(--pad);
+  width:max-content;
+}
+
+.moment-card{
+  position:relative;
+  width:min(72vw,760px);
+  height:72svh;
+  min-height:520px;
+  border-radius:30px;
+  overflow:hidden;
+  flex:0 0 auto;
+}
+
+.moment-card:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 45%,rgba(23,52,41,.78));
+}
+
+.moment-card__copy{
+  position:absolute;z-index:3;
+  left:26px;right:26px;bottom:26px;
+}
+
+.moment-card__copy span{
+  font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lemon)
+}
+
+.moment-card__copy h3{
+  margin:10px 0 0;
+  font:400 clamp(3rem,5vw,5.7rem)/.8 var(--display);
+  text-transform:uppercase;
+}
+
+.lab{
+  background:var(--cream);
+  padding:13vh var(--pad);
+}
+
+.lab-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:6vw;
+  align-items:start;
+}
+
+.lab-board{
+  position:sticky;
+  top:12vh;
+  min-height:74svh;
+  border-radius:30px;
+  background:var(--white);
+  overflow:hidden;
+  border:2px solid var(--ink);
+}
+
+.lab-board__image{
+  position:absolute;inset:0;
+}
+
+.lab-board__overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(transparent 49.5%,rgba(23,52,41,.11) 50%,transparent 50.5%),
+    linear-gradient(90deg,transparent 49.5%,rgba(23,52,41,.11) 50%,transparent 50.5%);
+  background-size:70px 70px;
+  mix-blend-mode:multiply;
+}
+
+.lab-board__title{
+  position:absolute;left:26px;top:24px;right:26px;
+  font:400 clamp(3rem,5vw,5.5rem)/.82 var(--display);
+  text-transform:uppercase;
+}
+
+.ingredients{
+  display:grid;
+  gap:18px;
+}
+
+.ingredient{
+  border:2px solid var(--ink);
+  border-radius:24px;
+  padding:28px;
+  background:var(--white);
+  min-height:220px;
+}
+
+.ingredient:nth-child(2){background:var(--lemon)}
+.ingredient:nth-child(3){background:var(--mint)}
+.ingredient:nth-child(4){background:#FFD6B0}
+.ingredient:nth-child(5){background:#DDE8FF}
+
+.ingredient .num{
+  font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase
+}
+
+.ingredient h3{
+  margin:16px 0 10px;
+  font:700 clamp(2.2rem,4vw,4rem)/.9 var(--accent);
+}
+
+.ingredient p{margin:0;max-width:480px}
+
+.flavour-playground{
+  background:var(--ink);
+  color:white;
+  padding:13vh var(--pad);
+}
+
+.flavour-shell{
+  margin-top:7vh;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:32px;
+  overflow:hidden;
+  background:#10261E;
+}
+
+.flavour-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  border-bottom:1px solid rgba(255,255,255,.16);
+}
+
+.flavour-tabs button{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:white;
+  padding:20px 24px;
+  cursor:pointer;
+  font:600 14px var(--accent);
+  border-right:1px solid rgba(255,255,255,.16);
+}
+
+.flavour-tabs button.active{
+  background:var(--lemon);
+  color:var(--ink);
+}
+
+.flavour-view{
+  min-height:78svh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+.flavour-view__visual{
+  position:relative;
+  overflow:hidden;
+  background:var(--lemon);
+}
+
+.flavour-view__visual img{
+  transition:opacity .25s ease;
+}
+
+.flavour-view__copy{
+  padding:clamp(30px,6vw,80px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:var(--green);
+}
+
+.flavour-view__copy h3{
+  margin:0;
+  font:400 clamp(4rem,8vw,8rem)/.78 var(--display);
+  text-transform:uppercase;
+}
+
+.flavour-view__copy p{
+  max-width:480px;
+  font-size:18px;
+  color:rgba(255,255,255,.78);
+}
+
+.mix{
+  background:var(--lemon);
+  padding:13vh var(--pad);
+}
+
+.mix-steps{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.mix-step{
+  min-height:58svh;
+  border-radius:28px;
+  overflow:hidden;
+  position:relative;
+  border:2px solid var(--ink);
+  background:var(--cream);
+}
+
+.mix-step img{
+  position:absolute;inset:0;
+}
+
+.mix-step:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 45%,rgba(23,52,41,.72));
+}
+
+.mix-step__copy{
+  position:absolute;z-index:3;
+  left:22px;right:22px;bottom:22px;
+  color:white;
+}
+
+.mix-step__copy .num{
+  font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lemon)
+}
+
+.mix-step__copy h3{
+  margin:10px 0 0;
+  font:400 clamp(2.8rem,4vw,4.7rem)/.82 var(--display);
+  text-transform:uppercase;
+}
+
+.campaign-wall{
+  background:var(--orange);
+  padding:13vh var(--pad);
+}
+
+.wall{
+  position:relative;
+  min-height:170svh;
+  margin-top:8vh;
+}
+
+.wall-item{
+  position:absolute;
+  overflow:hidden;
+  border-radius:24px;
+  box-shadow:0 28px 60px rgba(92,38,0,.2);
+}
+
+.wall-item:nth-child(1){left:0;top:0;width:38%;height:34%}
+.wall-item:nth-child(2){right:2%;top:4%;width:46%;height:28%}
+.wall-item:nth-child(3){left:12%;top:38%;width:46%;height:31%}
+.wall-item:nth-child(4){right:0;top:41%;width:35%;height:36%}
+.wall-item:nth-child(5){left:0;bottom:0;width:45%;height:27%}
+.wall-item:nth-child(6){right:7%;bottom:2%;width:42%;height:24%}
+
+.wall-item:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(23,52,41,.76));
+}
+
+.wall-copy{
+  position:absolute;z-index:3;
+  left:20px;right:20px;bottom:20px;color:white;
+}
+
+.wall-copy h3{
+  margin:0;
+  font:400 clamp(2.2rem,4vw,4.6rem)/.82 var(--display);
+  text-transform:uppercase;
+}
+
+.wall-word{
+  position:absolute;
+  z-index:4;
+  font:400 clamp(4rem,10vw,10rem)/.75 var(--display);
+  text-transform:uppercase;
+  color:var(--ink);
+}
+
+.wall-word.one{left:42%;top:28%;transform:rotate(-8deg)}
+.wall-word.two{left:2%;top:72%;color:var(--blue);transform:rotate(6deg)}
+
+.retail-playground{
+  background:var(--cream);
+  padding:13vh var(--pad);
+}
+
+.retail-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:18px;
+}
+
+.retail-main{
+  min-height:86svh;
+  border-radius:30px;
+  overflow:hidden;
+  position:relative;
+  background:linear-gradient(135deg,var(--lemon),var(--orange));
+}
+
+.retail-main:before{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 72% 25%,rgba(46,131,255,.35),transparent 20%),
+    repeating-linear-gradient(90deg,transparent 0 18%,rgba(255,255,255,.22) 18.3% 18.7%,transparent 19% 36%);
+}
+
+.retail-main__product{
+  position:absolute;
+  left:50%;bottom:8%;
+  width:min(320px,30vw);
+  transform:translateX(-50%);
+  border-radius:24px;
+  box-shadow:0 40px 80px rgba(80,48,0,.3);
+}
+
+.retail-main__copy{
+  position:absolute;z-index:3;
+  left:var(--pad);top:var(--pad);
+  max-width:650px;
+}
+
+.retail-main__copy h3{
+  margin:0;
+  font:400 clamp(4rem,8vw,8.5rem)/.78 var(--display);
+  text-transform:uppercase;
+}
+
+.retail-side{
+  display:grid;
+  gap:18px;
+}
+
+.retail-side__card{
+  min-height:41svh;
+  border-radius:28px;
+  overflow:hidden;
+  position:relative;
+}
+
+.retail-side__card:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(23,52,41,.7));
+}
+
+.retail-side__copy{
+  position:absolute;z-index:3;
+  left:20px;right:20px;bottom:20px;color:white;
+}
+
+.retail-side__copy h3{
+  margin:0;
+  font:400 clamp(2.5rem,4vw,4.5rem)/.82 var(--display);
+  text-transform:uppercase;
+}
+
+.closing{
+  min-height:100svh;
+  background:var(--blue);
+  color:white;
+  display:grid;
+  place-items:center;
+  padding:var(--pad);
+  text-align:center;
+}
+
+.energy-slider{
+  width:min(920px,90vw);
+}
+
+.energy-slider h2{
+  margin:0 0 54px;
+  font:400 clamp(4.4rem,10vw,10.5rem)/.76 var(--display);
+  text-transform:uppercase;
+}
+
+.energy-slider input{
+  width:100%;
+  accent-color:var(--lemon);
+}
+
+.slider-labels{
+  display:flex;justify-content:space-between;
+  margin-top:12px;
+  font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase
+}
+
+.slider-lemon{
+  margin:60px auto 0;
+  width:min(260px,42vw);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.8),transparent 9%),var(--lemon);
+  transform:scale(.55);
+  transition:transform .3s var(--ease),filter .3s var(--ease);
+  box-shadow:0 28px 70px rgba(0,0,0,.18);
+}
+
+.slider-line{
+  margin:32px 0 0;
+  font:700 clamp(2rem,4vw,4rem)/1 var(--accent);
+}
+
+footer{
+  background:var(--ink);
+  color:white;
+  padding:68px var(--pad);
+  display:flex;justify-content:space-between;align-items:flex-end;gap:30px;
+}
+
+footer .mark{font:800 clamp(3rem,7vw,7rem)/.8 var(--accent)}
+footer p{margin:0;color:rgba(255,255,255,.58)}
+
+.reveal{opacity:0;transform:translateY(70px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.on{opacity:1;transform:none}
+.mask{clip-path:inset(0 0 100% 0);transition:clip-path 1.15s var(--ease)}
+.mask.on{clip-path:inset(0)}
+
+@media(max-width:980px){
+  .navlinks{display:none}
+  .lab-grid,.flavour-view,.retail-grid{grid-template-columns:1fr}
+  .lab-board{position:relative;top:auto}
+  .mix-steps{grid-template-columns:1fr 1fr}
+  .wall{min-height:auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .wall-item{position:relative!important;inset:auto!important;width:auto!important;height:480px!important}
+  .wall-word{display:none}
+}
+
+@media(max-width:650px){
+  .energy-time{font-size:clamp(5rem,24vw,8rem)}
+  .bottle-pin__product{width:44vw}
+  .section-head{display:block}
+  .section-head p{margin-top:24px}
+  .moments-track{gap:14px}
+  .moment-card{width:84vw;height:62svh;min-height:430px}
+  .flavour-tabs button{flex:1 1 50%}
+  .mix-steps{grid-template-columns:1fr}
+  .wall{grid-template-columns:1fr}
+  .wall-item{height:440px!important}
+  .retail-main__product{width:50vw}
+  footer{flex-direction:column;align-items:flex-start}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  .reveal,.mask{opacity:1;transform:none;clip-path:none}
+}
+</style>
+</head>
+<body>
+<div class="progress"><span></span></div>
+
+<header class="nav">
+  <a class="brand" href="#top">LemonAid</a>
+  <nav class="navlinks">
+    <a href="#journey">Journey</a>
+    <a href="#lab">Lab</a>
+    <a href="#flavours">Flavours</a>
+    <a href="#campaign">Campaign</a>
+  </nav>
+  <span>Strength, squeezed fresh</span>
+</header>
+
+<main>
+<section class="energy-open" id="top">
+  <div class="energy-stage">
+    <div class="energy-burst"></div>
+    <div class="energy-meter">
+      <div class="energy-meter__top"><span>Energy level</span><span class="meter-value">08%</span></div>
+      <div class="energy-meter__track"><div class="energy-meter__fill"></div></div>
+    </div>
+    <div>
+      <h1 class="energy-time">2:47 PM</h1>
+      <p class="energy-status">Energy: almost gone.</p>
+    </div>
+    <div class="energy-lemon"></div>
+    <div class="reveal-word">Squeeze back.</div>
+  </div>
+</section>
+
+<section class="journey" id="journey">
+  <div class="journey__intro">
+    <div>
+      <div class="eyebrow">01 — The energy journey</div>
+      <h2 class="reveal">One bottle. <span>Every real-life energy moment.</span></h2>
+    </div>
+  </div>
+
+  <div class="bottle-journey">
+    <div class="bottle-pin">
+      <div class="bottle-pin__background"></div>
+
+      <div class="bottle-pin__scene active" data-scene="0">
+        <img src="assets/people_bottles.jpg" alt="People holding colourful bottled drinks">
+      </div>
+      <div class="bottle-pin__scene" data-scene="1">
+        <img src="assets/coldpressed_hands.jpg" alt="Hands holding lemon and orange drinks outdoors">
+      </div>
+      <div class="bottle-pin__scene" data-scene="2">
+        <img src="assets/lif_pair.jpg" alt="Two colourful functional juice bottles">
+      </div>
+      <div class="bottle-pin__scene" data-scene="3">
+        <img src="assets/cucumber_lime.jpg" alt="Fresh cucumber and lime drinks">
+      </div>
+
+      <div class="bottle-pin__product">
+        <img src="assets/lemonaid_classic.jpg" alt="LemonAid Classic Lemon bottle">
+      </div>
+
+      <div class="bottle-pin__label">
+        <div class="time">2:47 PM / Still moving</div>
+        <h3>Energy for everything still ahead.</h3>
+        <p>Work. Study. Travel. Exercise. Heat. LemonAid is built for the ordinary moments when energy needs to come back quickly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="energy-moments">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">02 — Horizontal energy moments</div>
+      <h2 class="reveal">Energy for real life.</h2>
+    </div>
+    <p>Not only athletes. LemonAid belongs in the lecture hall, office, commute, studio, gym and long day.</p>
+  </div>
+
+  <div class="moments-track">
+    <article class="moment-card">
+      <img src="assets/people_bottles.jpg" alt="Friends holding functional drinks">
+      <div class="moment-card__copy"><span>Morning commute</span><h3>Start brighter.</h3></div>
+    </article>
+    <article class="moment-card">
+      <img src="assets/coldpressed_hands.jpg" alt="Cold-pressed drinks held outside">
+      <div class="moment-card__copy"><span>Study session</span><h3>Keep your focus.</h3></div>
+    </article>
+    <article class="moment-card">
+      <img src="assets/lif_pair.jpg" alt="Two juice bottles in natural light">
+      <div class="moment-card__copy"><span>Afternoon slump</span><h3>Drink your charger.</h3></div>
+    </article>
+    <article class="moment-card">
+      <img src="assets/cucumber_lime.jpg" alt="Hydrating cucumber lime drinks">
+      <div class="moment-card__copy"><span>Heat and movement</span><h3>Refresh and return.</h3></div>
+    </article>
+  </div>
+</section>
+
+<section class="lab" id="lab">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">03 — Product laboratory</div>
+      <h2 class="reveal">Bright science. Familiar ingredients.</h2>
+    </div>
+    <p>The functional story is explained clearly without making the brand feel medicinal.</p>
+  </div>
+
+  <div class="lab-grid">
+    <div class="lab-board mask">
+      <div class="lab-board__image"><img src="assets/lime_can.jpg" alt="Bright lime beverage surrounded by fresh lime halves"></div>
+      <div class="lab-board__overlay"></div>
+      <div class="lab-board__title">Energy you can recognise.</div>
+    </div>
+
+    <div class="ingredients">
+      <article class="ingredient reveal"><div class="num">01 / Citrus</div><h3>Freshness you can see.</h3><p>Fruit-first photography makes the flavour and refreshment feel immediate.</p></article>
+      <article class="ingredient reveal"><div class="num">02 / Natural glucose</div><h3>Fast energy positioning.</h3><p>The formulation direction is built around a quick everyday lift.</p></article>
+      <article class="ingredient reveal"><div class="num">03 / Electrolytes</div><h3>Movement and heat.</h3><p>A functional cue suited to commuting, activity and demanding days.</p></article>
+      <article class="ingredient reveal"><div class="num">04 / Vitamin C</div><h3>Citrus-led wellness.</h3><p>A familiar ingredient story that reinforces brightness and everyday health.</p></article>
+      <article class="ingredient reveal"><div class="num">05 / Ginger + mint</div><h3>Flavour with purpose.</h3><p>Warmth, cooling and recovery cues become part of each blend’s personality.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="flavour-playground" id="flavours">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">04 — Interactive flavour playground</div>
+      <h2 class="reveal">Pick your kind of energy.</h2>
+    </div>
+    <p>Each flavour changes the atmosphere, product image and emotional promise.</p>
+  </div>
+
+  <div class="flavour-shell">
+    <div class="flavour-tabs">
+      <button class="active" data-flavour="classic">Classic Lemon</button>
+      <button data-flavour="ginger">Lemon + Ginger</button>
+      <button data-flavour="mint">Lemon + Mint</button>
+      <button data-flavour="orange">Lemon + Orange</button>
+      <button data-flavour="berry">Lemon + Berry</button>
+    </div>
+
+    <div class="flavour-view">
+      <div class="flavour-view__visual">
+        <img id="flavourImage" src="assets/lemonaid_classic.jpg" alt="Classic Lemon LemonAid bottle">
+      </div>
+      <div class="flavour-view__copy" id="flavourCopy">
+        <div class="eyebrow">Classic Lemon / Clarity</div>
+        <h3>Clear focus. Clean restart.</h3>
+        <p>Sharp, direct and instantly refreshing—the flagship expression of LemonAid.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mix">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">05 — Mixing ritual</div>
+      <h2 class="reveal">Tear. Pour. Shake. Go.</h2>
+    </div>
+    <p>The sachet ritual becomes a bold four-step story rather than a technical instruction panel.</p>
+  </div>
+
+  <div class="mix-steps">
+    <article class="mix-step mask"><img src="assets/lemonaid_sachets.jpg" alt="Colourful LemonAid sachets"><div class="mix-step__copy"><div class="num">01</div><h3>Tear.</h3></div></article>
+    <article class="mix-step mask"><img src="assets/lemonaid_classic.jpg" alt="LemonAid bottle ready for mixing"><div class="mix-step__copy"><div class="num">02</div><h3>Pour.</h3></div></article>
+    <article class="mix-step mask"><img src="assets/coldpressed_hands.jpg" alt="Hands holding brightly coloured drinks"><div class="mix-step__copy"><div class="num">03</div><h3>Shake.</h3></div></article>
+    <article class="mix-step mask"><img src="assets/people_bottles.jpg" alt="People carrying colourful drinks"><div class="mix-step__copy"><div class="num">04</div><h3>Go.</h3></div></article>
+  </div>
+</section>
+
+<section class="campaign-wall" id="campaign">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">06 — Irregular campaign wall</div>
+      <h2 class="reveal">Made to interrupt the scroll.</h2>
+    </div>
+    <p>Different image scales, layered copy and lively compositions make the campaign feel spontaneous rather than template-driven.</p>
+  </div>
+
+  <div class="wall">
+    <article class="wall-item mask"><img src="assets/watermelon.jpg" alt="Watermelon drink bottle surrounded by watermelon"><div class="wall-copy"><h3>Fruit becomes the set.</h3></div></article>
+    <article class="wall-item mask"><img src="assets/strawberry_can.jpg" alt="Strawberry beverage can inside a fruit composition"><div class="wall-copy"><h3>Unexpected energy.</h3></div></article>
+    <article class="wall-item mask"><img src="assets/lif_bottle.jpg" alt="Juice bottle surrounded by mangoes"><div class="wall-copy"><h3>Ingredient-led colour.</h3></div></article>
+    <article class="wall-item mask"><img src="assets/juice_lineup.jpg" alt="Colourful lineup of juice bottles"><div class="wall-copy"><h3>One system. Many moods.</h3></div></article>
+    <article class="wall-item mask"><img src="assets/lime_can.jpg" alt="Bright lime beverage can"><div class="wall-copy"><h3>Citrus clean.</h3></div></article>
+    <article class="wall-item mask"><img src="assets/cucumber_lime.jpg" alt="Fresh cucumber lime drinks"><div class="wall-copy"><h3>Back in the game.</h3></div></article>
+
+    <div class="wall-word one">Low battery?</div>
+    <div class="wall-word two">Drink your charger.</div>
+  </div>
+</section>
+
+<section class="retail-playground">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">07 — Retail playground</div>
+      <h2 class="reveal">A citrus pop-up people photograph.</h2>
+    </div>
+    <p>Sampling, flavour discovery and oversized lemon forms turn retail into a bright public experience.</p>
+  </div>
+
+  <div class="retail-grid">
+    <div class="retail-main mask">
+      <div class="retail-main__copy">
+        <h3>Squeeze Back Station.</h3>
+        <p>Giant citrus forms, chilled product displays and flavour buttons create an interactive energy stop.</p>
+      </div>
+      <img class="retail-main__product" src="assets/lemonaid_classic.jpg" alt="LemonAid bottle displayed in a citrus retail installation">
+    </div>
+
+    <div class="retail-side">
+      <article class="retail-side__card mask"><img src="assets/juice_lineup.jpg" alt="Colourful lineup of bottled drinks"><div class="retail-side__copy"><h3>Flavour discovery wall</h3></div></article>
+      <article class="retail-side__card mask"><img src="assets/people_bottles.jpg" alt="People holding a range of drinks"><div class="retail-side__copy"><h3>Sampling in motion</h3></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="energy-slider">
+    <div class="eyebrow">08 — Closing interaction</div>
+    <h2>How much day do you have left?</h2>
+    <input id="energyRange" type="range" min="0" max="100" value="35" aria-label="Energy level">
+    <div class="slider-labels"><span>Almost done</span><span>Still going</span></div>
+    <div class="slider-lemon" id="sliderLemon"></div>
+    <p class="slider-line" id="sliderLine">The day isn’t done. Neither are you.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="mark">LemonAid</div>
+  <p>Healthy instant citrus energy.<br>Strength, squeezed fresh.</p>
+</footer>
+
+<script>
+const progress=document.querySelector(".progress span");
+const energyOpen=document.querySelector(".energy-open");
+const fill=document.querySelector(".energy-meter__fill");
+const meterValue=document.querySelector(".meter-value");
+const lemon=document.querySelector(".energy-lemon");
+const burst=document.querySelector(".energy-burst");
+const revealWord=document.querySelector(".reveal-word");
+
+const bottleJourney=document.querySelector(".bottle-journey");
+const scenes=[...document.querySelectorAll(".bottle-pin__scene")];
+
+const moments=document.querySelector(".energy-moments");
+const momentsTrack=document.querySelector(".moments-track");
+
+const flavours={
+  classic:{
+    image:"assets/lemonaid_classic.jpg",
+    eyebrow:"Classic Lemon / Clarity",
+    title:"Clear focus. Clean restart.",
+    text:"Sharp, direct and instantly refreshing—the flagship expression of LemonAid.",
+    bg:"#2F803E"
+  },
+  ginger:{
+    image:"assets/lemonaid_ginger.jpg",
+    eyebrow:"Lemon + Ginger / Recovery",
+    title:"Warm strength for demanding days.",
+    text:"A more grounded blend for recovery, movement and longer stretches of effort.",
+    bg:"#C87800"
+  },
+  mint:{
+    image:"assets/lemonaid_mint.jpg",
+    eyebrow:"Lemon + Mint / Cooling",
+    title:"Cooling energy for heat and movement.",
+    text:"Fresh, light and restorative—designed for hot weather and active routines.",
+    bg:"#2E83FF"
+  },
+  orange:{
+    image:"assets/coldpressed_hands.jpg",
+    eyebrow:"Lemon + Orange / Momentum",
+    title:"Bright energy with social lift.",
+    text:"Juicy, upbeat and easygoing—made for shared movement and daytime energy.",
+    bg:"#FF7A00"
+  },
+  berry:{
+    image:"assets/lif_pair.jpg",
+    eyebrow:"Lemon + Berry / Play",
+    title:"Unexpected colour. Playful momentum.",
+    text:"A younger, brighter expression that stretches the brand beyond familiar citrus.",
+    bg:"#FF4E7D"
+  }
+};
+
+function update(){
+  const max=document.documentElement.scrollHeight-innerHeight;
+  progress.style.width=`${max?scrollY/max*100:0}%`;
+
+  const openRect=energyOpen.getBoundingClientRect();
+  const openProgress=Math.max(0,Math.min(1,-openRect.top/(energyOpen.offsetHeight-innerHeight)));
+  const pct=Math.round(8+openProgress*92);
+  fill.style.width=pct+"%";
+  meterValue.textContent=String(pct).padStart(2,"0")+"%";
+  lemon.style.bottom=(-8+openProgress*54)+"%";
+  lemon.style.transform=`translateX(-50%) scale(${.75+openProgress*.65}) rotate(${openProgress*180}deg)`;
+  burst.style.opacity=Math.max(0,(openProgress-.45)*1.8);
+  revealWord.style.opacity=Math.max(0,(openProgress-.55)*2.2);
+  revealWord.style.transform=`translateY(${Math.max(0,50-openProgress*70)}px)`;
+
+  const journeyRect=bottleJourney.getBoundingClientRect();
+  const journeyProgress=Math.max(0,Math.min(1,-journeyRect.top/(bottleJourney.offsetHeight-innerHeight)));
+  const sceneIndex=Math.min(scenes.length-1,Math.floor(journeyProgress*scenes.length));
+  scenes.forEach((scene,i)=>scene.classList.toggle("active",i===sceneIndex));
+
+  if(innerWidth>720){
+    const rect=moments.getBoundingClientRect();
+    const maxShift=Math.max(0,momentsTrack.scrollWidth-innerWidth+80);
+    const local=Math.max(0,Math.min(1,(innerHeight-rect.top)/(rect.height+innerHeight)));
+    momentsTrack.style.transform=`translateX(${-maxShift*local}px)`;
+  }else{
+    momentsTrack.style.transform="none";
+  }
+}
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("on");
+      io.unobserve(entry.target);
+    }
+  });
+},{threshold:.14,rootMargin:"0px 0px -8% 0px"});
+
+document.querySelectorAll(".reveal,.mask").forEach(el=>io.observe(el));
+
+document.querySelectorAll(".flavour-tabs button").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll(".flavour-tabs button").forEach(b=>b.classList.remove("active"));
+    button.classList.add("active");
+    const key=button.dataset.flavour;
+    const data=flavours[key];
+    const img=document.getElementById("flavourImage");
+    const copy=document.getElementById("flavourCopy");
+    img.style.opacity="0";
+    setTimeout(()=>{
+      img.src=data.image;
+      img.alt=data.title;
+      img.style.opacity="1";
+    },180);
+    copy.style.background=data.bg;
+    copy.innerHTML=`<div class="eyebrow">${data.eyebrow}</div><h3>${data.title}</h3><p>${data.text}</p>`;
+  });
+});
+
+const slider=document.getElementById("energyRange");
+const sliderLemon=document.getElementById("sliderLemon");
+const sliderLine=document.getElementById("sliderLine");
+
+function updateSlider(){
+  const v=Number(slider.value);
+  sliderLemon.style.transform=`scale(${.45+v/100*.85}) rotate(${v*1.2}deg)`;
+  sliderLemon.style.filter=`saturate(${.6+v/100*.8})`;
+  sliderLine.textContent=v<30?"Almost done? Squeeze back.":v<70?"There is still more day ahead.":"The day isn’t done. Neither are you.";
+}
+slider.addEventListener("input",updateSlider);
+
+addEventListener("scroll",update,{passive:true});
+addEventListener("resize",update);
+updateSlider();
+update();
+</script>
+</body>
+</html>
